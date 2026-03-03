@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="TaskFlow Pro 2026 - The World's Most Advanced Task Management System with AI, Analytics, and Cinematic UI">
+    <meta name="keywords" content="task management, productivity, AI, analytics, calendar, team collaboration">
+    <meta name="author" content="TaskFlow Pro">
+    
+    <title>TaskFlow Pro 2026 | Enterprise Task Management System</title>
+    
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    
+    <!-- Fonts - Ultra Modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons - Premium Selection -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cinematic 3D Background Canvas -->
+    <canvas id="bgCanvas" class="bg-canvas"></canvas>
+    
+    <!-- Particle System -->
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Ultra Premium Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-tasks"></i>
+                <span>TaskFlow<span class="gradient-text">Pro</span></span>
+            </div>
+            <div class="loader-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="loaderProgress"></div>
+                </div>
+                <div class="progress-text" id="loaderText">Initializing Quantum Engine...</div>
+            </div>
+            <div class="loader-particle"></div>
+        </div>
+    </div>
+
+    <!-- Glass Morphism Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo-wrapper">
+                <div class="logo-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="logo-text">
+                    TaskFlow<span>Pro</span>
+                </div>
+                <div class="logo-badge">v4.0</div>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active" data-text="Home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#dashboard" class="nav-link" data-text="Dashboard">
+                    <i class="fas fa-layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#tasks" class="nav-link" data-text="Tasks">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Tasks</span>
+                    <span class="nav-badge" id="taskNavBadge">5</span>
+                </a>
+                <a href="#analytics" class="nav-link" data-text="Analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#calendar" class="nav-link" data-text="Calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendar</span>
+                </a>
+                <a href="#team" class="nav-link" data-text="Team">
+                    <i class="fas fa-users"></i>
+                    <span>Team</span>
+                </a>
+                <a href="#achievements" class="nav-link" data-text="Achievements">
+                    <i class="fas fa-trophy"></i>
+                    <span>Achievements</span>
+                </a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="action-btn" id="searchToggle">
+                    <i class="fas fa-search"></i>
+                </button>
+                
+                <button class="action-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+                
+                <button class="action-btn theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="user-menu" id="userMenu">
+                    <button class="user-btn" id="authBtn">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Login</span>
+                            <span class="user-role">Get Started</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-stats">
+                                <div class="stat">
+                                    <span class="value" id="userXP">0</span>
+                                    <span class="label">XP</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="value" id="userLevel">1</span>
+                                    <span class="label">Level</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="value" id="userStreak">0</span>
+                                    <span class="label">🔥</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-body">
+                            <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                            <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#achievements"><i class="fas fa-trophy"></i> Achievements</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search tasks, projects, team members..." id="globalSearch">
+                <button class="search-close" id="searchClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Cinematic -->
+    <section id="home" class="hero">
+        <div class="hero-particles" id="heroParticles"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-pulse"></span>
+                <i class="fas fa-crown"></i>
+                <span>Enterprise Productivity Suite 2026</span>
+            </div>
+            
+            <h1 class="hero-title">
+                <span class="gradient-text">Quantum</span> Task Management
+                <br>for the <span class="gradient-text">Modern Era</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Experience the future of productivity with AI-powered task management, 
+                real-time collaboration, and cinematic analytics. Join 50,000+ professionals.
+            </p>
+            
+            <div class="hero-cta">
+                <button class="btn-primary" id="heroStartBtn">
+                    <span>Start Free Trial</span>
+                    <i class="fas fa-rocket"></i>
+                    <div class="btn-glow"></div>
+                </button>
+                
+                <button class="btn-outline" id="heroDemoBtn">
+                    <span>Watch Demo</span>
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="liveUsers">15K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="tasksCompleted">100K+</div>
+                    <div class="stat-label">Tasks Done</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="companies">1K+</div>
+                    <div class="stat-label">Companies</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-scroll">
+            <div class="mouse"></div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="section-header">
+            <h2 class="section-title">Welcome Back, <span id="userName">Guest</span></h2>
+            <p class="section-subtitle">Here's your productivity overview</p>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card glass" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Tasks</h3>
+                    <div class="stat-value-wrapper">
+                        <span class="stat-value" id="dashboardTotalTasks">24</span>
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="totalTasksProgress" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card glass" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Completed</h3>
+                    <div class="stat-value-wrapper">
+                        <span class="stat-value" id="dashboardCompletedTasks">16</span>
+                        <span class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i> 67%
+                        </span>
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="completedProgress" style="width: 67%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card glass" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Focus Time</h3>
+                    <div class="stat-value-wrapper">
+                        <span class="stat-value" id="focusTime">12.5</span>
+                        <span class="stat-unit">hrs</span>
+                    </div>
+                    <span class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +2.3hrs
+                    </span>
+                </div>
+            </div>
+            
+            <div class="stat-card glass" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Productivity</h3>
+                    <div class="stat-value-wrapper">
+                        <span class="stat-value" id="productivityScore">94</span>
+                        <span class="stat-unit">%</span>
+                    </div>
+                    <span class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> Top 5%
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity Chart -->
+        <div class="chart-container glass">
+            <div class="chart-header">
+                <h3>Weekly Activity</h3>
+                <div class="chart-controls">
+                    <button class="chart-control active" data-period="week">Week</button>
+                    <button class="chart-control" data-period="month">Month</button>
+                    <button class="chart-control" data-period="year">Year</button>
+                </div>
+            </div>
+            <canvas id="activityChart" class="activity-chart"></canvas>
+        </div>
+        
+        <!-- Recent Activity & Upcoming -->
+        <div class="dashboard-grid">
+            <div class="recent-activity glass">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="activity-list" id="recentActivity"></div>
+            </div>
+            
+            <div class="upcoming-tasks glass">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Upcoming</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="upcoming-list" id="upcomingTasks"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasks Section - Advanced Task Manager -->
+    <section id="tasks" class="tasks">
+        <div class="section-header">
+            <h2 class="section-title">Task<span class="gradient-text">Manager</span></h2>
+            <p class="section-subtitle">Organize, prioritize, and conquer your workflow</p>
+        </div>
+        
+        <div class="tasks-container glass">
+            <!-- Task Toolbar -->
+            <div class="tasks-toolbar">
+                <div class="toolbar-left">
+                    <button class="toolbar-btn" id="bulkSelectBtn">
+                        <i class="far fa-check-square"></i>
+                    </button>
+                    <div class="view-options">
+                        <button class="view-btn active" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" data-view="grid">
+                            <i class="fas fa-grid-2"></i>
+                        </button>
+                        <button class="view-btn" data-view="board">
+                            <i class="fas fa-columns"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="taskSearch" placeholder="Search tasks...">
+                    </div>
+                    
+                    <button class="filter-btn" id="filterBtn">
+                        <i class="fas fa-sliders-h"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Add Task Form -->
+            <div class="add-task-panel">
+                <div class="add-task-header">
+                    <h4><i class="fas fa-plus-circle"></i> Create New Task</h4>
+                    <button class="collapse-btn" id="collapseAddTask">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+                
+                <div class="add-task-body" id="addTaskBody">
+                    <div class="input-group">
+                        <input type="text" id="taskInput" placeholder="What needs to be done?">
+                    </div>
+                    
+                    <div class="task-options">
+                        <select id="taskCategory">
+                            <option value="work">💼 Work</option>
+                            <option value="personal">🏠 Personal</option>
+                            <option value="health">💪 Health</option>
+                            <option value="learning">📚 Learning</option>
+                        </select>
+                        
+                        <select id="taskPriority">
+                            <option value="low">🟢 Low</option>
+                            <option value="medium">🟡 Medium</option>
+                            <option value="high">🔴 High</option>
+                        </select>
+                        
+                        <input type="date" id="taskDueDate">
+                        
+                        <button class="btn-primary" id="addTaskBtn">
+                            <i class="fas fa-plus"></i> Add Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filter Panel -->
+            <div class="filter-panel" id="filterPanel">
+                <div class="filter-header">
+                    <h5>Filter Tasks</h5>
+                    <button class="close-filter" id="closeFilter">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="filter-body">
+                    <div class="filter-group">
+                        <label>Category</label>
+                        <div class="filter-options" id="categoryFilters">
+                            <button class="filter-option active" data-category="all">All</button>
+                            <button class="filter-option" data-category="work">Work</button>
+                            <button class="filter-option" data-category="personal">Personal</button>
+                            <button class="filter-option" data-category="health">Health</button>
+                            <button class="filter-option" data-category="learning">Learning</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Priority</label>
+                        <div class="filter-options" id="priorityFilters">
+                            <button class="filter-option active" data-priority="all">All</button>
+                            <button class="filter-option" data-priority="low">Low</button>
+                            <button class="filter-option" data-priority="medium">Medium</button>
+                            <button class="filter-option" data-priority="high">High</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <div class="filter-options" id="statusFilters">
+                            <button class="filter-option active" data-status="all">All</button>
+                            <button class="filter-option" data-status="pending">Pending</button>
+                            <button class="filter-option" data-status="completed">Completed</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task List -->
+            <div id="taskList" class="task-list"></div>
+            
+            <!-- Task Summary -->
+            <div class="task-summary">
+                <div class="summary-item">
+                    <span>Total:</span>
+                    <strong id="totalTasks">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Completed:</span>
+                    <strong id="completedTasks">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Pending:</span>
+                    <strong id="pendingTasks">0</strong>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                    </div>
+                    <span id="progressPercentage">0%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="analytics">
+        <div class="section-header">
+            <h2 class="section-title">Quantum <span class="gradient-text">Analytics</span></h2>
+            <p class="section-subtitle">Deep insights into your productivity matrix</p>
+        </div>
+        
+        <div class="analytics-dashboard">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card glass">
+                    <div class="kpi-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Focus Score</h3>
+                        <div class="kpi-value" id="kpiFocusScore">94%</div>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass">
+                    <div class="kpi-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Velocity</h3>
+                        <div class="kpi-value" id="kpiVelocity">24</div>
+                        <span>tasks/day</span>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass">
+                    <div class="kpi-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Avg. Time</h3>
+                        <div class="kpi-value" id="kpiAvgTime">2.4</div>
+                        <span>hrs</span>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass">
+                    <div class="kpi-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Efficiency</h3>
+                        <div class="kpi-value" id="kpiEfficiency">87%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="chart-card glass">
+                    <h3>Category Distribution</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                
+                <div class="chart-card glass">
+                    <h3>Priority Breakdown</h3>
+                    <canvas id="priorityChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Insights -->
+            <div class="insights-grid">
+                <div class="insight-card glass">
+                    <i class="fas fa-lightbulb"></i>
+                    <div class="insight-content">
+                        <h4>Peak Productivity</h4>
+                        <p><strong id="peakTime">10:00 AM - 2:00 PM</strong></p>
+                    </div>
+                </div>
+                
+                <div class="insight-card glass">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div class="insight-content">
+                        <h4>Completion Rate</h4>
+                        <p><strong id="completionRate">78%</strong> on time</p>
+                    </div>
+                </div>
+                
+                <div class="insight-card glass">
+                    <i class="fas fa-award"></i>
+                    <div class="insight-content">
+                        <h4>Best Day</h4>
+                        <p><strong id="bestDay">Tuesday</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="calendar">
+        <div class="section-header">
+            <h2 class="section-title">Smart <span class="gradient-text">Calendar</span></h2>
+            <p class="section-subtitle">Visualize and plan your schedule</p>
+        </div>
+        
+        <div class="calendar-container glass">
+            <div class="calendar-header">
+                <div class="calendar-nav">
+                    <button class="nav-btn" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="currentMonth">March 2026</h3>
+                    <button class="nav-btn" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="calendar-views">
+                    <button class="view-btn active" data-view="month">Month</button>
+                    <button class="view-btn" data-view="week">Week</button>
+                    <button class="view-btn" data-view="day">Day</button>
+                </div>
+            </div>
+            
+            <div class="calendar-weekdays">
+                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            </div>
+            
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="section-header">
+            <h2 class="section-title">Team <span class="gradient-text">Collaboration</span></h2>
+            <p class="section-subtitle">Work together seamlessly</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card glass">
+                <div class="team-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Team Tasks</h3>
+                <p>Assign and track tasks across your team</p>
+                <button class="team-btn">Create Team</button>
+            </div>
+            
+            <div class="team-card glass">
+                <div class="team-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Live Chat</h3>
+                <p>Discuss and collaborate in real-time</p>
+                <button class="team-btn">Open Chat</button>
+            </div>
+            
+            <div class="team-card glass">
+                <div class="team-icon">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <h3>File Sharing</h3>
+                <p>Share files securely with your team</p>
+                <button class="team-btn">Upload</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="achievements">
+        <div class="section-header">
+            <h2 class="section-title">Achievements & <span class="gradient-text">Rewards</span></h2>
+            <p class="section-subtitle">Your journey to productivity mastery</p>
+        </div>
+        
+        <div class="achievements-grid" id="achievementsGrid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-tasks"></i>
+                    <span>TaskFlow<span>Pro</span></span>
+                </div>
+                <p>The future of task management, today.</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>Product</h4>
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Enterprise</a>
+                </div>
+                
+                <div class="link-group">
+                    <h4>Resources</h4>
+                    <a href="#">Blog</a>
+                    <a href="#">Documentation</a>
+                    <a href="#">Support</a>
+                </div>
+                
+                <div class="link-group">
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 TaskFlow Pro. All rights reserved.</p>
+            <p>Made with <i class="fas fa-heart"></i> by TaskFlow Team</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeAuthModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-body">
+                <div class="auth-container">
+                    <div class="auth-side">
+                        <div class="auth-brand">
+                            <i class="fas fa-tasks"></i>
+                            <span>TaskFlow<span>Pro</span></span>
+                        </div>
+                        <h3>Welcome back!</h3>
+                        <p>Sign in to continue your productivity journey</p>
+                    </div>
+                    
+                    <div class="auth-forms">
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" data-tab="login">Login</button>
+                            <button class="auth-tab" data-tab="register">Register</button>
+                        </div>
+                        
+                        <form id="loginForm" class="auth-form active">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <button type="submit" class="btn-primary">Login</button>
+                        </form>
+                        
+                        <form id="registerForm" class="auth-form">
+                            <input type="text" id="registerName" placeholder="Full Name" required>
+                            <input type="email" id="registerEmail" placeholder="Email" required>
+                            <input type="password" id="registerPassword" placeholder="Password" minlength="6" required>
+                            <button type="submit" class="btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
