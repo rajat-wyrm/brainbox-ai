@@ -3,25 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
-import { GlobalErrorBoundary } from './components/GlobalErrorBoundary';
 
-// Initialize Sentry in production
-if (process.env.NODE_ENV === 'production') {
+// Initialize Sentry in production only
+if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
-    integrations: [new BrowserTracing()],
+    integrations: [],
     tracesSampleRate: 1.0,
-    environment: process.env.NODE_ENV,
-    release: `brainbox@${process.env.npm_package_version}`,
-    beforeSend(event) {
-      // Don't send errors in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Sentry event:', event);
-        return null;
-      }
-      return event;
-    }
   });
 }
 
@@ -31,8 +19,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <GlobalErrorBoundary>
-      <App />
-    </GlobalErrorBoundary>
+    <App />
   </React.StrictMode>
 );
