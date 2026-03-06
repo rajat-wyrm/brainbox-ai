@@ -1,4 +1,5 @@
-﻿class AIService {
+// Simple AI service without external dependencies
+class AIService {
   async chat(message: string, history: any[] = []) {
     try {
       const token = localStorage.getItem('token');
@@ -6,7 +7,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token ? Bearer  : ''
+          'Authorization': token ? 'Bearer ' + token : ''
         },
         body: JSON.stringify({ message, history })
       });
@@ -25,7 +26,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token ? Bearer  : ''
+          'Authorization': token ? 'Bearer ' + token : ''
         },
         body: JSON.stringify({ text })
       });
