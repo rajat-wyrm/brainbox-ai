@@ -1,11 +1,17 @@
-﻿# Dependencies
+﻿# Environment files
+.env
+.env.local
+.env.development
+.env.production
+*.env
+
+# Dependencies
 node_modules/
 package-lock.json
 
-# Environment files
-.env
-.env.local
-.env.production
+# Build outputs
+/dist
+/coverage
 
 # Logs
 logs/
@@ -13,32 +19,3 @@ logs/
 
 # Uploads
 uploads/
-
-# Backups
-backups/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
-coverage/
-.nyc_output/
-
-# Build
-dist/
-build/
-
-# Environment files
-.env
-.env.local
-.env.development
-.env.production
-*.env
