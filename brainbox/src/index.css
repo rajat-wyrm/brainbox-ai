@@ -1,0 +1,23 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+  }
+  
+  .glass {
+    @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg;
+  }
+  
+  .glass-card {
+    @apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30;
+  }
+}
