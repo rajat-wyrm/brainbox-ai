@@ -6,10 +6,12 @@ import { useErrorHandler } from '../hooks/useErrorHandler';
 
 interface FallbackProps {
   error: Error;
-  resetErrorBoundary: () => void;
+  componentStack: string | null;
+  eventId: string | null;
+  resetError(): void;
 }
 
-const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
+const ErrorFallback: React.FC<FallbackProps> = ({ error, resetError }) => {
   const navigate = useNavigate();
   const { handleError } = useErrorHandler();
 
@@ -41,7 +43,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) =
 
         <div className="flex flex-col gap-3">
           <button
-            onClick={resetErrorBoundary}
+            onClick={resetError}
             className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition"
           >
             <RefreshCw size={18} />
@@ -50,7 +52,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) =
           
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center justify-center gap-2 w-full py-3 glass text-gray-700 dark:text-white rounded-xl font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            className="flex items-center justify-center gap-2 w-full py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
           >
             <Home size={18} />
             Go to Dashboard
@@ -58,7 +60,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) =
           
           <button
             onClick={() => window.history.back()}
-            className="flex items-center justify-center gap-2 w-full py-3 glass text-gray-700 dark:text-white rounded-xl font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            className="flex items-center justify-center gap-2 w-full py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
           >
             <ArrowLeft size={18} />
             Go Back
@@ -76,7 +78,7 @@ interface ErrorBoundaryProps {
 export const GlobalErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
   return (
     <Sentry.ErrorBoundary
-      fallback={ErrorFallback}
+      fallback={({ error, resetError }) => <ErrorFallback error={error} resetError={resetError} componentStack={null} eventId={null} />}
       onError={(error, componentStack) => {
         console.error('Global error:', error, componentStack);
       }}
