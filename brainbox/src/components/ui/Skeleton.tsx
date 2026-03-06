@@ -20,9 +20,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     height: height || (variant === 'text' ? '1em' : variant === 'circular' ? '40px' : '100px')
   };
 
-  const baseClass = `bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-shimmer rounded ${
-    variant === 'circular' ? 'rounded-full' : ''
-  } ${className}`;
+  const baseClass = `skeleton ${variant === 'circular' ? 'rounded-full' : variant === 'text' ? 'rounded' : 'rounded-lg'} ${className}`;
 
   if (count > 1) {
     return (
@@ -36,23 +34,3 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 
   return <div className={baseClass} style={style} />;
 };
-
-// Add CSS for shimmer animation
-export const SkeletonStyles = () => (
-  <style>
-    {`
-      @keyframes shimmer {
-        0% {
-          background-position: -1000px 0;
-        }
-        100% {
-          background-position: 1000px 0;
-        }
-      }
-      .animate-shimmer {
-        animation: shimmer 2s infinite linear;
-        background-size: 1000px 100%;
-      }
-    `}
-  </style>
-);
