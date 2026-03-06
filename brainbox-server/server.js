@@ -286,3 +286,33 @@ process.on('unhandledRejection', (err) => {
 });
 
 module.exports = { app, server, io };
+
+// Metrics endpoint
+app.get('/metrics', metricsService.getMetricsHandler());
+
+// Detailed health check
+app.get('/health/detailed', metricsService.getHealthHandler());
+
+// Debug endpoint (only in development)
+if (process.env.NODE_ENV === 'development') {
+  app.get('/debug/logs', (req, res) => {
+    res.json(debugLogger.getRecentLogs(parseInt(req.query.limit) || 100));
+  });
+
+  app.get('/debug/errors', async (req, res) => {
+    const errors = await Error.getRecentErrors(parseInt(req.query.hours) || 24);
+    res.json(errors);
+  });
+}
+
+// Error tracking middleware
+app.use(debugLogger.requestLogger());
+app.use(debugLogger.errorLogger());
+
+// Track active users
+app.use((req, res, next) => {
+  if (req.user) {
+    metricsService.updateActiveUsers(1);
+  }
+  next();
+});
