@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - brainbox-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/brainbox?authSource=admin
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-key-change-this}
+      - FRONTEND_URL=http://localhost
+    depends_on:
+      - mongodb
+    networks:
+      - brainbox-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - brainbox-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  brainbox-network:
+    driver: bridge
